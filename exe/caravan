@@ -22,6 +22,10 @@ option_parser = OptionParser.new do |opts|
     options[:mode] = value || "shell"
   end
 
+  opts.on("-i IGNORE_FILES", "--ignore IGNORE_FILES", "ignore files") do |value|
+    options[:ignore] = value || "\.(git|svn)$"
+  end
+
   opts.on_tail("--version", "Show version") do
     puts Caravan::VERSION
     exit
@@ -29,5 +33,5 @@ option_parser = OptionParser.new do |opts|
 end.parse!(ARGV)
 
 if options.key?(:src) && options.key?(:dst)
-    Caravan.start(options[:src], options[:dst])
+    Caravan.start(options)
 end

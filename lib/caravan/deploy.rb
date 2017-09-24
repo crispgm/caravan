@@ -12,7 +12,7 @@ module Caravan
         when "rsync_local"
           return Caravan::DeployMethods::RsyncLocal.new
         else
-          Message.error("Unknown deploy method #{method}")
+          Message.error("Unknown deploy method \"#{method}\"")
           return nil
         end
       end

@@ -1,20 +1,40 @@
+require "yaml"
+
 module Caravan
   class Config < Hash
     DEFAULT_CONFIG = {
-      # shell, scp, rsync
-      "deploy_mode" => "shell",
+      "deploy_mode" => "rsync_local",
       "incremental" => true,
       "exclude" => %w(
         .git .svn
       )
-    }.map { |k, v| [k, v.freeze] }].freeze
-  end
+    }.freeze
 
-  class << self
-    def from(user_config_path)
-    end
+    class << self
+      def default_conf
+        DEFAULT_CONFIG
+      end
 
-    def dump_default_conf(user_config_path)
+      def from(user_config_path)
+        if File.exist?(user_config_path)
+          YAML.load_file(user_config_path)
+        else
+          dump_conf(user_config_path, default_conf)
+          default_conf
+        end
+      end
+
+      def dump_conf(user_config_path, user_config)
+        File.open(user_config_path, "w") do |f|
+          f.write(user_config.to_yaml)
+        end
+      end
+
+      def pretty_puts(conf)
+        conf.each do |k, v|
+          Message.info("    => #{k}: #{v}")
+        end
+      end
     end
   end
 end

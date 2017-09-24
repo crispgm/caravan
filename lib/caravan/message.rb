@@ -4,19 +4,19 @@ module Caravan
   module Message
     class << self
       def info(msg)
-        puts msg
+        puts "[INFO] #{msg}"
       end
 
       def error(msg)
-        puts msg.red
+        puts "[ERROR] #{msg}".red
       end
 
       def warning(msg)
-        puts msg.yellow
+        puts "[WARN] #{msg}".yellow
       end
 
       def success(msg)
-        puts msg.green
+        puts "#{msg}".green
       end
     end
   end
