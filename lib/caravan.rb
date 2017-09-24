@@ -6,6 +6,7 @@ require "caravan/deploy_methods/scp"
 require "caravan/deploy_methods/rsync"
 require "caravan/deploy_methods/rsync_local"
 require "caravan/message"
+require "caravan/version"
 
 module Caravan
   class << self

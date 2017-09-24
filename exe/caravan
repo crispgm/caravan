@@ -2,15 +2,32 @@
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), *%w(.. lib)))
 
+require "optparse"
 require "caravan"
 
-def usage
-  puts "Usage:\tcaravan [watch_path] [target_path]"
-end
+options = {}
+option_parser = OptionParser.new do |opts|
+  opts.banner = "Caravan #{Caravan::VERSION}. Copyright (c) David Zhang. 2017\n"
+  opts.separator ""
 
-if ARGV.size != 2
-  usage
-  exit 0
-end
+  opts.on("-s SOURCE_PATH", "--source SOURCE_PATH", "Source path") do |value|
+    options[:src] = value
+  end
 
-Caravan.start(ARGV[0], ARGV[1])
+  opts.on("-d DEST_PATH", "--dest DEST_PATH", "Destination path") do |value|
+    options[:dst] = value
+  end
+
+  opts.on("-m DEPLOY_MODE", "--mode DEPLOY_MODE", "Deploy mode") do |value|
+    options[:mode] = value || "shell"
+  end
+
+  opts.on_tail("--version", "Show version") do
+    puts Caravan::VERSION
+    exit
+  end
+end.parse!(ARGV)
+
+if options.key?(:src) && options.key?(:dst)
+    Caravan.start(options[:src], options[:dst])
+end
