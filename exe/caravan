@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), *%w(.. lib)))
+
+require "caravan"
+
+def usage
+  puts "Usage:\tcaravan [watch_path] [target_path]"
+end
+
+if ARGV.size != 2
+  usage
+  exit 0
+end
+
+Caravan.start(ARGV[0], ARGV[1])
