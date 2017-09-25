@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "Caravan"
   spec.version       = Caravan::VERSION
   spec.authors       = ["David Zhang"]
-  spec.email         = ["zhangwanlong@bytedance.com"]
+  spec.email         = ["crispgm@gmail.com"]
 
   spec.summary       = %q{Simple watcher and deployer}
   spec.description   = %q{Caravan is a simple file watcher and deployer for local development.}
