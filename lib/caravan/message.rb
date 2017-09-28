@@ -3,6 +3,10 @@ require "colorize"
 module Caravan
   module Message
     class << self
+      def debug(msg)
+        puts "[DEBUG] #{msg}".light_black
+      end
+
       def info(msg)
         puts "[INFO] #{msg}"
       end
