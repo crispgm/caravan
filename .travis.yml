@@ -2,10 +2,8 @@ language: ruby
 cache: bundler
 rvm:
   - 2.3.0
-env:
-  - CODECLIMATE_REPO_TOKEN: b72ccd136db6874a3d5dd842c50c1dc0933a1f49a02c55ce8567ec7311600af3
 after_success:
-  - bundle exec codeclimate-test-reporter
+  - CODECLIMATE_REPO_TOKEN=b72ccd136db6874a3d5dd842c50c1dc0933a1f49a02c55ce8567ec7311600af3 bundle exec codeclimate-test-reporter
 notifications:
   email: false
   slack: navyblue-team:ioO5diAGc5WUQVDKc5BH1UbE
