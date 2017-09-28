@@ -19,8 +19,11 @@ module Caravan
     end
 
     class Base
+      attr_accessor :debug
+
       def initialize
         Message.info("Creating #{self.class.name}...")
+        @debug = false
       end
 
       def run(src, dst)
