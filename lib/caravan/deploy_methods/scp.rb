@@ -5,7 +5,7 @@ module Caravan
     class Scp < Deploy::Base
       def run(src, dst)
         super(src, dst) do |s, d|
-          `scp -r #{s} #{d}`
+          Caravan::Command.run("scp -r #{s} #{d}", @debug)
         end
       end
     end

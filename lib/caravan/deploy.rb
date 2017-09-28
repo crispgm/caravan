@@ -29,13 +29,13 @@ module Caravan
       def run(src, dst)
         Message.info("Deploying #{src} to #{dst}...")
 
-        ret_val = true
+        status = 0
         if block_given?
-          ret_val = yield src, dst
+          status, output = yield src, dst
         end
 
-        Message.error("deploying block returned false") if ret_val == false
-        return ret_val
+        Message.error("deploying block returned false") unless status == 0
+        return status
       end
     end
   end

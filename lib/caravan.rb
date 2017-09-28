@@ -19,13 +19,15 @@ module Caravan
       target_path = options[:dst]
       mode = options[:mode]
       ignores = options[:ignore]
+      debug = options[:debug]
 
       deployer = Deploy.create_deployer(mode)
+      deployer.debug = true if debug
       if deployer.nil?
         exit -1
       end
 
-      process_conf
+      # process_conf
 
       listener = Listen.to(src_path) do |modified, added, removed|
         unless (modified.empty? && added.empty? && removed.empty?)

@@ -22,8 +22,13 @@ option_parser = OptionParser.new do |opts|
     options[:mode] = value || "shell"
   end
 
-  opts.on("-i IGNORE_FILES", "--ignore IGNORE_FILES", "ignore files") do |value|
+  opts.on("-i IGNORE_FILES", "--ignore IGNORE_FILES", "Ignore files") do |value|
     options[:ignore] = value || "\.(git|svn)$"
+  end
+
+  options[:debug] = false
+  opts.on("-b", "--debug", "Debug mode") do
+    options[:debug] = true
   end
 
   opts.on_tail("--version", "Show version") do

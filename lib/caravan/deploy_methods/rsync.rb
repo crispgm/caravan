@@ -5,8 +5,7 @@ module Caravan
     class Rsync < Deploy::Base
       def run(src, dst)
         super(src, dst) do |s, d|
-           puts "rsync -avl #{s} #{d}"
-          `rsync -avl #{s} #{d}`
+          Caravan::Command.run("rsync -avl #{s} #{d}", @debug)
         end
       end
     end
