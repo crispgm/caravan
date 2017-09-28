@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "caravan/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "Caravan"
+  spec.name          = "caravan"
   spec.version       = Caravan::VERSION
   spec.authors       = ["David Zhang"]
   spec.email         = ["crispgm@gmail.com"]
