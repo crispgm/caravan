@@ -1,3 +1,5 @@
+require "colorize"
+
 module Caravan
   module Deploy
     class << self
@@ -27,7 +29,8 @@ module Caravan
       end
 
       def run(src, dst)
-        Message.info("Deploying #{src} to #{dst}...")
+        time_str = Time.now.strftime("%H:%M:%S").green
+        Message.info("#{time_str} Deploying #{src} to #{dst}...")
 
         status = 0
         if block_given?
