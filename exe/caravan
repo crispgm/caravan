@@ -7,7 +7,7 @@ require "caravan"
 
 options = {}
 option_parser = OptionParser.new do |opts|
-  opts.banner = "Caravan #{Caravan::VERSION}. Copyright (c) David Zhang. 2017\n"
+  opts.banner = "Caravan #{Caravan::VERSION}\nCopyright (c) David Zhang 2017\n"
   opts.separator ""
 
   opts.on("-s SOURCE_PATH", "--source SOURCE_PATH", "Source path") do |value|
