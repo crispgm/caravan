@@ -1,3 +1,4 @@
+require "caravan/command"
 require "caravan/config"
 require "caravan/deploy"
 require "caravan/deploy_methods/shell"
