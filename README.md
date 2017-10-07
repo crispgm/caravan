@@ -21,10 +21,39 @@ $ gem install caravan
 $ caravan --help
 ```
 
+```
+    -s, --source SOURCE_PATH         Source path
+    -d, --dest DEST_PATH             Destination path
+    -m, --mode DEPLOY_MODE           Deploy mode
+    -i, --ignore IGNORE_FILES        Ignore files
+    -b, --debug                      Debug mode
+        --version                    Show version
+```
+
 Example:
 
 ```
 $ caravan -s /path/to/project/. -d /path/to/deploy -m shell
+```
+
+## Configuration
+
+Generate default configuration:
+
+```
+$ cd /path/to/src
+$ caravan init
+```
+
+A `caravan.yml` will be generated as `/path/to/src/caravan.yml`. You may specify any options in command arguments except source path.
+
+```
+debug: false
+deploy_mode: rsync_local
+incremental: true
+exclude:
+- ".git"
+- ".svn"
 ```
 
 ## Plan
