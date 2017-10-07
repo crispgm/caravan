@@ -35,8 +35,8 @@ module Caravan
       def merge(options, conf)
         merged_conf = conf
         merged_conf["src"] = options[:src]
-        merged_conf["dst"] = options[:dst]
 
+        merged_conf["dst"] = options[:dst] if options.key?(:dst)
         merged_conf["debug"] = options[:debug] if options.key?(:debug)
         merged_conf["deploy_mode"] = options[:mode] if options.key?(:mode)
         merged_conf["exclude"] = options[:ignore] if options.key?(:ignore)

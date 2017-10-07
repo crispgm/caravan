@@ -39,8 +39,13 @@ option_parser = OptionParser.new do |opts|
     puts Caravan::VERSION
     exit
   end
-end.parse!(ARGV)
+end
 
+if ARGV.size == 1 && ARGV[0] == "init"
+  Caravan.dump_default_conf
+end
+
+option_parser.parse!(ARGV)
 if options.key?(:src) && options.key?(:dst)
-    Caravan.start(options)
+  Caravan.start(options)
 end

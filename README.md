@@ -34,6 +34,7 @@ $ caravan -s /path/to/project/. -d /path/to/deploy -m shell
 - [x] `caravan.yml` for project-specialized configuration
 - [ ] Watch and deploy only the changed file instead of the whole folder
 - [ ] Callback for deployment
+- [ ] Multiple deployment configurations
 
 ## LICENSE
 

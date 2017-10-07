@@ -70,5 +70,12 @@ module Caravan
     def sleep_forever
       loop { sleep 1000 }
     end
+
+    def dump_default_conf
+      user_config_path = File.join(File.expand_path("."), DEFAULT_CONFIG_NAME)
+      default_conf = Caravan::Config.default_conf
+
+      Caravan::Config.dump(user_config_path, default_conf)
+    end
   end
 end
