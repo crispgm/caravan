@@ -15,49 +15,56 @@ DEFAULT_CONFIG_NAME = "caravan.yml".freeze
 module Caravan
   class << self
     def start(options)
-      src_path = options[:src]
-      target_path = options[:dst]
-      mode = options[:mode]
-      ignores = options[:ignore]
-      debug = options[:debug]
+      merged_conf = Caravan::Config.merge(options, process_conf)
+      src_path = merged_conf["src"]
+      target_path = merged_conf["dst"]
+      deploy_mode = merged_conf["deploy_mode"]
+      ignores = merged_conf["exclude"]
+      debug = merged_conf["debug"]
 
-      deployer = Deploy.create_deployer(mode)
+      Caravan::Config.pretty_puts(merged_conf)
+
+      deployer = Caravan::Deploy.create_deployer(deploy_mode)
       deployer.debug = true if debug
       if deployer.nil?
         exit -1
       end
 
-      # process_conf
-
-      listener = Listen.to(src_path) do |modified, added, removed|
-        unless (modified.empty? && added.empty? && removed.empty?)
-          (added + modified + removed).each do |change|
-            Message.info("#{change} was changed.")
-          end
-
-          deployer.run(src_path, target_path)
-        end
+      listener = create_listener(deployer, src_path, target_path)
+      ignores.each do |item|
+        listener.ignore(Regexp.compile(item))
       end
 
-      listener.ignore(ignores)
-
-      Message.success("Starting to watch #{src_path}...")
+      Caravan::Message.success("Starting to watch #{src_path}...")
       deployer.run(src_path, target_path)
       listener.start
       
       trap("INT") do
         listener.stop
-        Message.success("\tHalting watching.")
+        Caravan::Message.success("\tHalting watching.")
         exit 0
       end
 
       sleep_forever
     end
 
+    def create_listener(deployer, src_path, target_path)
+      Listen.to(src_path) do |modified, added, removed|
+        unless (modified.empty? && added.empty? && removed.empty?)
+          (added + modified + removed).each do |change|
+            Caravan::Message.info("#{change} was changed.")
+          end
+
+          deployer.run(src_path, target_path)
+        end
+      end
+    end
+
     def process_conf
-      Message.success("Reading configuration...")
-      conf = Caravan::Config.from(DEFAULT_CONFIG_NAME)
-      Config.pretty_puts(conf)
+      Caravan::Message.success("Reading configuration...")
+      user_config_path = File.join(File.dirname(__FILE__), DEFAULT_CONFIG_NAME)
+      conf = Caravan::Config.from(user_config_path)
+      conf
     end
 
     def sleep_forever

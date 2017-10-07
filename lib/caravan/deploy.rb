@@ -3,7 +3,7 @@ require "colorize"
 module Caravan
   module Deploy
     class << self
-      def create_deployer(method = 'shell')
+      def create_deployer(method = "shell")
         case method
         when "shell"
           return Caravan::DeployMethods::Shell.new
