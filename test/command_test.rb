@@ -1,6 +1,6 @@
 require "test_helper"
 
-class CommandTest < Minitest::Test
+class CommandTest < CaravanTest
   context "run command" do
     should "succeed and return 0" do
       status, output = Caravan::Command.run("echo test-command")

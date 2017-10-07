@@ -1,6 +1,6 @@
 require "test_helper"
 
-class IntegratedTest < Minitest::Test
+class IntegratedTest < CaravanTest
   context "smoke tests" do
     setup do
       `mkdir -p test/output`

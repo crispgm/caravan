@@ -1,6 +1,6 @@
 require "test_helper"
 
-class MessageTest < Minitest::Test
+class MessageTest < CaravanTest
   context "test message" do
     should "print debug" do
       assert_output("[DEBUG] debug message".light_black << "\n") do

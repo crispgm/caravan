@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DeployTest < Minitest::Test
+class DeployTest < CaravanTest
   context "test deploy" do
     should "create shell deployer" do
       shell_1 = Caravan::Deploy.create_deployer()
@@ -11,17 +11,17 @@ class DeployTest < Minitest::Test
 
     should "create scp deployer" do
       scp = Caravan::Deploy.create_deployer("scp")
-      assert_equal(true, scp.is_a?(Caravan::DeployMethods::Scp))
+      assert_true(scp.is_a?(Caravan::DeployMethods::Scp))
     end
 
     should "create rsync deployer" do
       rsync = Caravan::Deploy.create_deployer("rsync")
-      assert_equal(true, rsync.is_a?(Caravan::DeployMethods::Rsync))
+      assert_true(rsync.is_a?(Caravan::DeployMethods::Rsync))
     end
 
     should "create rsync local deployer" do
       rsync_local = Caravan::Deploy.create_deployer("rsync_local")
-      assert_equal(true, rsync_local.is_a?(Caravan::DeployMethods::RsyncLocal))
+      assert_true(rsync_local.is_a?(Caravan::DeployMethods::RsyncLocal))
     end
 
     should "error if deployer not exists" do

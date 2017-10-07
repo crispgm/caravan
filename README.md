@@ -19,9 +19,7 @@ $ gem install caravan
 
 ```
 $ caravan --help
-```
 
-```
     -s, --source SOURCE_PATH         Source path
     -d, --dest DEST_PATH             Destination path
     -m, --mode DEPLOY_MODE           Deploy mode
