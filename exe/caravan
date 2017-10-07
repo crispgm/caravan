@@ -23,7 +23,11 @@ option_parser = OptionParser.new do |opts|
   end
 
   opts.on("-i IGNORE_FILES", "--ignore IGNORE_FILES", "Ignore files") do |value|
-    options[:ignore] = value || "\.(git|svn)$"
+    if options.key?(:ignore)
+      options[:ignore] << value
+    else
+      options[:ignore] = [value]
+    end
   end
 
   options[:debug] = false
