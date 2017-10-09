@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["David Zhang"]
   spec.email         = ["crispgm@gmail.com"]
 
-  spec.summary       = %q{Simple watcher and deployer}
-  spec.description   = %q{Caravan is a simple file watcher and deployer for local development.}
+  spec.summary       = %q{Simple project files watcher and deployer}
+  spec.description   = %q{Caravan is a simple file watcher and deployer of project files for local development.}
   spec.homepage      = "https://crispgm.github.io/caravan/"
   spec.license       = "MIT"
 
