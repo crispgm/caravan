@@ -8,10 +8,30 @@ class IntegratedTest < CaravanTest
 
     teardown do
       `rm -rf test/output`
+      `rm caravan.yml`
     end
 
     should "has a version number" do
       refute_nil Caravan::VERSION
+    end
+
+    should "dump default conf" do
+      Caravan.dump_default_conf
+      assert_true(File.exist?("caravan.yml"))
+    end
+
+    should "load default conf if no config file in source path" do
+      conf = Caravan.process_conf(".")
+      assert_equal(conf, Caravan::Config.default_conf)
+    end
+
+    should "load user conf if config file in source path" do
+      user_conf_path = File.expand_path("./test/output/caravan.user.yml")
+      user_conf = Caravan::Config.default_conf.dup
+      user_conf["deploy_mode"] = "rsync"
+      Caravan::Config.dump(user_conf_path, user_conf)
+      user_conf_loaded = Caravan::Config.from("./test/output/caravan.user.yml")
+      assert_equal(user_conf, user_conf_loaded)
     end
   end
 end

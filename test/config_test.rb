@@ -4,12 +4,14 @@ class ConfigTest < CaravanTest
   context "test config generation" do
     setup do
       @output_path = File.expand_path("./test/caravan.test.yml")
+      @user_conf_path = File.expand_path("./test/caravan.user.yml")
       @default_conf = Caravan::Config.default_conf
       Caravan::Config.dump(@output_path, @default_conf)
     end
 
     teardown do
       `rm #{@output_path}`
+      `rm #{@user_conf_path}`
     end
 
     should "file dumped to yaml" do
@@ -21,6 +23,11 @@ class ConfigTest < CaravanTest
     end
 
     should "load user configuration" do
+      user_conf = @default_conf.dup
+      user_conf["deploy_mode"] = "rsync"
+      Caravan::Config.dump(@user_conf_path, user_conf)
+      user_conf_loaded = Caravan::Config.from("./test/caravan.user.yml")
+      assert_equal(user_conf, user_conf_loaded)
     end
 
     should "get default if user configuration is not found" do
