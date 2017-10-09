@@ -47,4 +47,30 @@ class ConfigTest < CaravanTest
       assert_true(std_output.include?("=> exclude:"))
     end
   end
+
+  context "merge options with conf" do
+    should "assign conf if no options" do
+      conf = {
+        "c": 1
+      }
+      merged = Caravan::Config.merge({}, conf)
+      assert_equal(conf, merged)
+    end
+
+    should "merge if options exist" do
+      conf = {
+        "c": 1
+      }
+      merged = Caravan::Config.merge({:debug => true}, conf)
+      assert_true(merged["debug"])
+    end
+
+    should "override src" do
+      conf = {
+        "src": 1
+      }
+      merged = Caravan::Config.merge({:src => 2}, conf)
+      assert_equal(2, merged["src"])
+    end
+  end
 end
