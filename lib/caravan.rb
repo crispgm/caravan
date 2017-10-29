@@ -27,7 +27,7 @@ module Caravan
       deployer = Caravan::Deploy.create_deployer(deploy_mode)
       deployer.debug = true if debug
       if deployer.nil?
-        exit -1
+        exit(-1)
       end
 
       listener = create_listener(deployer, src_path, target_path)
@@ -42,7 +42,7 @@ module Caravan
       trap("INT") do
         listener.stop
         Caravan::Message.success("\tHalting watching.")
-        exit 0
+        exit(0)
       end
 
       sleep_forever
