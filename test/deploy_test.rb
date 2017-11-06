@@ -22,6 +22,7 @@ class DeployTest < CaravanTest
 
       should "create and deploy" do
         deployer = Caravan::Deploy.create_deployer("shell")
+        deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Shell))
         status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
         assert_equal(0, status)
@@ -40,6 +41,7 @@ class DeployTest < CaravanTest
 
       should "create and deploy" do
         deployer = Caravan::Deploy.create_deployer("scp")
+        deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Scp))
         status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
         assert_equal(0, status)
@@ -58,6 +60,7 @@ class DeployTest < CaravanTest
 
       should "create and deploy" do
         deployer = Caravan::Deploy.create_deployer("rsync")
+        deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Rsync))
         status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
         assert_equal(0, status)
@@ -75,6 +78,7 @@ class DeployTest < CaravanTest
       end
 
       should "create and deploy" do
+        deployer.debug = true
         deployer = Caravan::Deploy.create_deployer("rsync_local")
         assert_true(deployer.is_a?(Caravan::DeployMethods::RsyncLocal))
         status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
