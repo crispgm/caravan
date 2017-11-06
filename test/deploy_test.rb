@@ -46,6 +46,7 @@ class DeployTest < CaravanTest
         status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
+        puts `ls #{TARGET_FOLDER}`
       end
     end
 
@@ -65,6 +66,7 @@ class DeployTest < CaravanTest
         status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
+        puts `ls #{TARGET_FOLDER}`
       end
     end
 
@@ -78,8 +80,8 @@ class DeployTest < CaravanTest
       end
 
       should "create and deploy" do
-        deployer.debug = true
         deployer = Caravan::Deploy.create_deployer("rsync_local")
+        deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::RsyncLocal))
         status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
         assert_equal(0, status)
