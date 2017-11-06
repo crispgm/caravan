@@ -24,7 +24,7 @@ class DeployTest < CaravanTest
         deployer = Caravan::Deploy.create_deployer("shell")
         deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Shell))
-        status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
+        status = deployer.run("#{SOURCE_FOLDER}/*", TARGET_FOLDER)
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
       end
@@ -43,10 +43,9 @@ class DeployTest < CaravanTest
         deployer = Caravan::Deploy.create_deployer("scp")
         deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Scp))
-        status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
+        status = deployer.run("#{SOURCE_FOLDER}/*", TARGET_FOLDER)
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
-        puts `ls #{TARGET_FOLDER}`
       end
     end
 
@@ -63,7 +62,7 @@ class DeployTest < CaravanTest
         deployer = Caravan::Deploy.create_deployer("rsync")
         deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Rsync))
-        status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
+        status = deployer.run("#{SOURCE_FOLDER}/*", TARGET_FOLDER)
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
         puts `ls #{TARGET_FOLDER}`
