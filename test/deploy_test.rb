@@ -7,7 +7,7 @@ class DeployTest < CaravanTest
 
   context "test deploy" do
     should "create shell deployer by default" do
-      deployer = Caravan::Deploy.create_deployer()
+      deployer = Caravan::Deploy.create_deployer("#{SOURCE_FOLDER}/*", TARGET_FOLDER)
       assert_equal(true, deployer.is_a?(Caravan::DeployMethods::Shell))
     end
 
@@ -21,10 +21,10 @@ class DeployTest < CaravanTest
       end
 
       should "create and deploy" do
-        deployer = Caravan::Deploy.create_deployer("shell")
+        deployer = Caravan::Deploy.create_deployer("#{SOURCE_FOLDER}/*", TARGET_FOLDER, "shell")
         deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Shell))
-        status = deployer.run("#{SOURCE_FOLDER}/*", TARGET_FOLDER)
+        status = deployer.run()
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
       end
@@ -40,10 +40,10 @@ class DeployTest < CaravanTest
       end
 
       should "create and deploy" do
-        deployer = Caravan::Deploy.create_deployer("scp")
+        deployer = Caravan::Deploy.create_deployer("#{SOURCE_FOLDER}/*", TARGET_FOLDER, "scp")
         deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Scp))
-        status = deployer.run("#{SOURCE_FOLDER}/*", TARGET_FOLDER)
+        status = deployer.run()
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
       end
@@ -59,10 +59,10 @@ class DeployTest < CaravanTest
       end
 
       should "create and deploy" do
-        deployer = Caravan::Deploy.create_deployer("rsync")
+        deployer = Caravan::Deploy.create_deployer("#{SOURCE_FOLDER}/*", TARGET_FOLDER, "rsync")
         deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Rsync))
-        status = deployer.run("#{SOURCE_FOLDER}/*", TARGET_FOLDER)
+        status = deployer.run()
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
         puts `ls #{TARGET_FOLDER}`
@@ -79,10 +79,10 @@ class DeployTest < CaravanTest
       end
 
       should "create and deploy" do
-        deployer = Caravan::Deploy.create_deployer("rsync_local")
+        deployer = Caravan::Deploy.create_deployer(SOURCE_FOLDER, TARGET_FOLDER, "rsync_local")
         deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::RsyncLocal))
-        status = deployer.run(SOURCE_FOLDER, TARGET_FOLDER)
+        status = deployer.run()
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
       end
@@ -90,7 +90,7 @@ class DeployTest < CaravanTest
 
     should "error if deployer not exists" do
       assert_output("[ERROR] Unknown deploy method \"not_a_deployer\"".red << "\n") do
-        output = Caravan::Deploy.create_deployer("not_a_deployer")
+        output = Caravan::Deploy.create_deployer("#{SOURCE_FOLDER}/*", TARGET_FOLDER, "not_a_deployer")
         assert_nil(output)
       end
     end

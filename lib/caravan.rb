@@ -36,7 +36,7 @@ module Caravan
       end
 
       Caravan::Message.success("Starting to watch #{src_path}...")
-      deployer.run(src_path, target_path)
+      deployer.after_create
       listener.start
       
       trap("INT") do
@@ -51,11 +51,11 @@ module Caravan
     def create_listener(deployer, src_path, target_path)
       Listen.to(src_path) do |modified, added, removed|
         unless (modified.empty? && added.empty? && removed.empty?)
-          (added + modified + removed).each do |change|
-            Caravan::Message.info("#{change} was changed.")
-          end
-
+          changes = added + modified + removed
+          return unless deployer.after_change(changes)
+          return unless deployer.before_deploy()
           deployer.run(src_path, target_path)
+          deployer.after_deploy()
         end
       end
     end
