@@ -31,6 +31,14 @@ module Caravan
         @debug = false
       end
 
+      def handle_change(modified, added, removed)
+        @modified = modified
+        @added = added
+        @removed = removed
+
+        after_change
+      end
+
       def after_create
         Message.info("#{self.class.name} is created.")
 
@@ -43,21 +51,21 @@ module Caravan
         true
       end
 
-      def after_change(modified, added, removed)
-        modified.each do |change|
+      def after_change
+        @modified.each do |change|
           Caravan::Message.info("#{change} was changed.")
         end
 
-        added.each do |change|
+        @added.each do |change|
           Caravan::Message.info("#{change} was created.")
         end
 
-        removed.each do |change|
+        @removed.each do |change|
           Caravan::Message.info("#{change} was removed.")
         end
 
         if block_given?
-          ret_val = yield modified, added, removed
+          ret_val = yield @modified, @added, @removed
           debug_msg("Block `after_change` returned #{ret_val}")
           false if ret_val == false
         end
@@ -88,11 +96,21 @@ module Caravan
         Message.error("Deploying block returned false") unless status == 0
         return status
       end
-      
+
       def after_deploy
         if block_given?
           ret_val = yield
           debug_msg("Block `after_deploy` returned #{ret_val}")
+          false if ret_val == false
+        end
+
+        true
+      end
+
+      def before_destroy
+        if block_given?
+          ret_val = yield
+          debug_msg("Block `before_destroy` returned #{ret_val}")
           false if ret_val == false
         end
 
