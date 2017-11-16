@@ -7,12 +7,6 @@ module Caravan
         end
       end
 
-      def after_change
-        super do |m, a, r|
-          Caravan::Message.info("Hook: after_change")
-        end
-      end
-
       def before_deploy
         super do
           Caravan::Message.info("Hook: before_deploy")

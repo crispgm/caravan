@@ -30,7 +30,7 @@ module Caravan
         exit(-1)
       end
 
-      listener = create_listener(deployer, src_path, target_path)
+      listener = create_listener(deployer, src_path)
       ignores.each do |item|
         listener.ignore(Regexp.compile(item))
       end
@@ -49,12 +49,12 @@ module Caravan
       sleep_forever
     end
 
-    def create_listener(deployer, src_path, target_path)
+    def create_listener(deployer, src_path)
       Listen.to(src_path) do |modified, added, removed|
         return unless deployer.handle_change(modified, added, removed)
-        return unless deployer.before_deploy()
+        return unless deployer.before_deploy
         deployer.run
-        deployer.after_deploy()
+        deployer.after_deploy
       end
     end
 
