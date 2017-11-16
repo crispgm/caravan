@@ -41,6 +41,7 @@ module Caravan
       
       trap("INT") do
         listener.stop
+        deployer.before_destroy
         Caravan::Message.success("\tHalting watching.")
         exit(0)
       end
@@ -50,12 +51,10 @@ module Caravan
 
     def create_listener(deployer, src_path, target_path)
       Listen.to(src_path) do |modified, added, removed|
-        unless (modified.empty? && added.empty? && removed.empty?)
-          return unless deployer.after_change(modified, added, removed)
-          return unless deployer.before_deploy()
-          deployer.run
-          deployer.after_deploy()
-        end
+        return unless deployer.handle_change(modified, added, removed)
+        return unless deployer.before_deploy()
+        deployer.run
+        deployer.after_deploy()
       end
     end
 
