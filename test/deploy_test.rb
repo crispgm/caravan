@@ -11,6 +11,24 @@ class DeployTest < CaravanTest
       assert_equal(true, deployer.is_a?(Caravan::DeployMethods::Shell))
     end
 
+    context "test relative path" do
+      setup do
+        @deployer = Caravan::Deploy.create_deployer("#{SOURCE_FOLDER}/*", TARGET_FOLDER)
+      end
+
+      should "extract relative path from full path" do
+        assert_equal("/test/fixtures/testfile", @deployer.relative_path("#{Dir.pwd}/test/fixtures/testfile"))
+      end
+
+      should "return nil if path is nil" do
+        assert_nil(@deployer.relative_path("/test/fixtures/testfile"))
+      end
+
+      should "return nil if path the same" do
+        assert_nil(@deployer.relative_path(Dir.pwd))
+      end
+    end
+
     context "test shell deployer" do
       setup do
         Caravan::Command.run("mkdir -p #{TARGET_FOLDER}")
