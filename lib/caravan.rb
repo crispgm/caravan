@@ -24,7 +24,7 @@ module Caravan
 
       Caravan::Config.pretty_puts(merged_conf)
 
-      deployer = Caravan::Deploy.create_deployer(deploy_mode)
+      deployer = Caravan::Deploy.create_deployer(src_path, target_path, deploy_mode)
       deployer.debug = true if debug
       if deployer.nil?
         exit(-1)
@@ -51,10 +51,9 @@ module Caravan
     def create_listener(deployer, src_path, target_path)
       Listen.to(src_path) do |modified, added, removed|
         unless (modified.empty? && added.empty? && removed.empty?)
-          changes = added + modified + removed
-          return unless deployer.after_change(changes)
+          return unless deployer.after_change(modified, added, removed)
           return unless deployer.before_deploy()
-          deployer.run(src_path, target_path)
+          deployer.run
           deployer.after_deploy()
         end
       end
