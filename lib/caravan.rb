@@ -26,9 +26,7 @@ module Caravan
 
       deployer = Caravan::Deploy.create_deployer(src_path, target_path, deploy_mode)
       deployer.debug = true if debug
-      if deployer.nil?
-        exit(-1)
-      end
+      exit(-1) if deployer.nil?
 
       listener = create_listener(deployer, src_path)
       ignores.each do |item|
@@ -51,6 +49,7 @@ module Caravan
 
     def create_listener(deployer, src_path)
       Listen.to(src_path) do |modified, added, removed|
+        # rubocop:disable Lint/NonLocalExitFromIterator
         return unless deployer.handle_change(modified, added, removed)
         return unless deployer.before_deploy
         deployer.run

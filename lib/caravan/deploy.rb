@@ -6,16 +6,16 @@ module Caravan
       def create_deployer(src, dst, method = "shell")
         case method
         when "shell"
-          return Caravan::DeployMethods::Shell.new(src, dst)
+          Caravan::DeployMethods::Shell.new(src, dst)
         when "scp"
-          return Caravan::DeployMethods::Scp.new(src, dst)
+          Caravan::DeployMethods::Scp.new(src, dst)
         when "rsync"
-          return Caravan::DeployMethods::Rsync.new(src, dst)
+          Caravan::DeployMethods::Rsync.new(src, dst)
         when "rsync_local"
-          return Caravan::DeployMethods::RsyncLocal.new(src, dst)
+          Caravan::DeployMethods::RsyncLocal.new(src, dst)
         else
           Message.error("Unknown deploy method \"#{method}\"")
-          return nil
+          nil
         end
       end
     end
@@ -94,7 +94,7 @@ module Caravan
         end
 
         Message.error("Deploying block returned false") unless status == 0
-        return status
+        status
       end
 
       def after_deploy
@@ -126,6 +126,7 @@ module Caravan
       end
 
       private
+
       def debug_msg(msg)
         Caravan::Message.debug(msg) if @debug
       end
