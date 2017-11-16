@@ -35,19 +35,43 @@ module Caravan
         Message.info("#{self.class.name} is created.")
 
         if block_given?
-          yield
+          ret_val = yield
+          debug_msg("Block `after_create` returned #{ret_val}")
+          false if ret_val == false
         end
+
+        true
       end
 
-      def after_change(changes)
-        changes.each do |change|
+      def after_change(modified, added, removed)
+        modified.each do |change|
           Caravan::Message.info("#{change} was changed.")
+        end
+
+        added.each do |change|
+          Caravan::Message.info("#{change} was created.")
+        end
+
+        removed.each do |change|
+          Caravan::Message.info("#{change} was removed.")
+        end
+
+        if block_given?
+          ret_val = yield modified, added, removed
+          debug_msg("Block `after_change` returned #{ret_val}")
+          false if ret_val == false
         end
 
         true
       end
 
       def before_deploy
+        if block_given?
+          ret_val = yield
+          debug_msg("Block `before_deploy` returned #{ret_val}")
+          false if ret_val == false
+        end
+
         true
       end
 
@@ -58,13 +82,34 @@ module Caravan
         status = 0
         if block_given?
           status, output = yield src, dst
+          debug_msg("Block `run` returned #{status}")
         end
 
-        Message.error("deploying block returned false") unless status == 0
+        Message.error("Deploying block returned false") unless status == 0
         return status
       end
       
       def after_deploy
+        if block_given?
+          ret_val = yield
+          debug_msg("Block `after_deploy` returned #{ret_val}")
+          false if ret_val == false
+        end
+
+        true
+      end
+
+      def relative_path(path)
+        working_dir = Dir.pwd
+        path_routes = path.split(working_dir)
+        return nil if path_routes.nil? || path_routes.empty? || path_routes.size < 2
+
+        path_routes[-1]
+      end
+
+      private
+      def debug_msg(msg)
+        Caravan::Message.debug(msg) if @debug
       end
     end
   end
