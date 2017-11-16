@@ -24,23 +24,22 @@ module Caravan
 
       Caravan::Config.pretty_puts(merged_conf)
 
-      deployer = Caravan::Deploy.create_deployer(deploy_mode)
+      deployer = Caravan::Deploy.create_deployer(src_path, target_path, deploy_mode)
       deployer.debug = true if debug
-      if deployer.nil?
-        exit(-1)
-      end
+      exit(-1) if deployer.nil?
 
-      listener = create_listener(deployer, src_path, target_path)
+      listener = create_listener(deployer, src_path)
       ignores.each do |item|
         listener.ignore(Regexp.compile(item))
       end
 
       Caravan::Message.success("Starting to watch #{src_path}...")
-      deployer.run(src_path, target_path)
+      deployer.after_create
       listener.start
       
       trap("INT") do
         listener.stop
+        deployer.before_destroy
         Caravan::Message.success("\tHalting watching.")
         exit(0)
       end
@@ -48,15 +47,13 @@ module Caravan
       sleep_forever
     end
 
-    def create_listener(deployer, src_path, target_path)
+    def create_listener(deployer, src_path)
       Listen.to(src_path) do |modified, added, removed|
-        unless (modified.empty? && added.empty? && removed.empty?)
-          (added + modified + removed).each do |change|
-            Caravan::Message.info("#{change} was changed.")
-          end
-
-          deployer.run(src_path, target_path)
-        end
+        # rubocop:disable Lint/NonLocalExitFromIterator
+        return unless deployer.handle_change(modified, added, removed)
+        return unless deployer.before_deploy
+        deployer.run
+        deployer.after_deploy
       end
     end
 

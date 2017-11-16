@@ -60,11 +60,12 @@ exclude:
 - [x] Exclude watching unwanted files
 - [x] `caravan.yml` for project-specialized configuration
 - [ ] Watch and deploy only the changed file instead of the whole folder
-- [ ] Callbacks for deployment
-    - [ ] `after_create`
-    - [ ] `after_change`
-    - [ ] `before_deploy`
-    - [ ] `after_deploy`
+- [x] Callbacks for deployment
+    - [x] `after_create`
+    - [x] `after_change`
+    - [x] `before_deploy`
+    - [x] `after_deploy`
+    - [x] `before_destroy`
 - [ ] Multiple deployment configurations
 
 ## LICENSE
