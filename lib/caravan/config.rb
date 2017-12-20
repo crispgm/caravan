@@ -45,6 +45,7 @@ module Caravan
         merged_conf["debug"] = options[:debug] if options.key?(:debug)
         merged_conf["deploy_mode"] = options[:mode] if options.key?(:mode)
         merged_conf["exclude"] = options[:ignore] if options.key?(:ignore)
+        merged_conf["once"] = options[:once] if options.key?(:once)
 
         merged_conf
       end

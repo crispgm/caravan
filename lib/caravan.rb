@@ -32,6 +32,7 @@ module Caravan
 
       Caravan::Message.success("Starting to watch #{src_path}...")
       deployer.after_create
+      deploy_at_once(deployer) if merged_conf["once"]
       listener.start
       
       trap("INT") do
@@ -42,6 +43,12 @@ module Caravan
       end
 
       sleep_forever
+    end
+
+    def deploy_at_once(deployer)
+      deployer.before_deploy
+      deployer.run
+      deployer.after_deploy
     end
 
     def create_listener(deployer, src_path)

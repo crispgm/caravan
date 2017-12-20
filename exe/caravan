@@ -30,13 +30,14 @@ option_parser = OptionParser.new do |opts|
     end
   end
 
+  options[:once] = false
+  opts.on("-o", "--once", "Deploy at once") do
+    options[:once] = true
+  end
+
   options[:debug] = false
   opts.on("-b", "--debug", "Debug mode") do
     options[:debug] = true
-  end
-
-  options[:once] = false
-  opts.on("--once", "Deploy at once") do
   end
 
   opts.on_tail("--version", "Show version") do
