@@ -10,12 +10,9 @@ require "caravan/version"
 
 require "listen"
 
-DEFAULT_CONFIG_NAME = "caravan.yml".freeze
-
 module Caravan
   class << self
-    def start(options)
-      merged_conf = Caravan::Config.merge(options, process_conf(options[:src]))
+    def start(merged_conf)
       src_path = merged_conf["src"]
       target_path = merged_conf["dst"]
       deploy_mode = merged_conf["deploy_mode"]
@@ -59,7 +56,10 @@ module Caravan
 
     def process_conf(src_path)
       Caravan::Message.success("Reading configuration...")
-      user_config_path = File.join(File.expand_path(src_path), DEFAULT_CONFIG_NAME)
+      if src_path.nil?
+        src_path = '.'
+      end
+      user_config_path = File.join(File.expand_path(src_path), Caravan::Config.default_conf_name)
       conf = Caravan::Config.from(user_config_path)
       conf
     end
@@ -69,7 +69,7 @@ module Caravan
     end
 
     def dump_default_conf
-      user_config_path = File.join(File.expand_path("."), DEFAULT_CONFIG_NAME)
+      user_config_path = File.join(File.expand_path("."), Caravan::Config.default_conf_name)
       default_conf = Caravan::Config.default_conf
 
       Caravan::Config.dump(user_config_path, default_conf)

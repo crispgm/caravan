@@ -11,9 +11,15 @@ module Caravan
       )
     }.freeze
 
+    DEFAULT_CONFIG_NAME = "caravan.yml".freeze
+
     class << self
       def default_conf
         DEFAULT_CONFIG
+      end
+
+      def default_conf_name
+        DEFAULT_CONFIG_NAME
       end
 
       def from(user_config_path)
@@ -34,8 +40,7 @@ module Caravan
 
       def merge(options, conf)
         merged_conf = conf
-        merged_conf["src"] = options[:src]
-
+        merged_conf["src"] = options[:src] if options.key?(:src)
         merged_conf["dst"] = options[:dst] if options.key?(:dst)
         merged_conf["debug"] = options[:debug] if options.key?(:debug)
         merged_conf["deploy_mode"] = options[:mode] if options.key?(:mode)

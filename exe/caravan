@@ -46,6 +46,9 @@ if ARGV.size == 1 && ARGV[0] == "init"
 end
 
 option_parser.parse!(ARGV)
-if options.key?(:src) && options.key?(:dst)
-  Caravan.start(options)
+merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]))
+if merged_conf.key?('src') && merged_conf.key?('dst') && merged_conf.key?('deploy_mode')
+  Caravan.start(merged_conf)
+else
+  Caravan::Message.error('No src, dst, deploy_mode specified. Cannot deploy.')
 end
