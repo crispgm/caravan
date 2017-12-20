@@ -1,3 +1,3 @@
 module Caravan
-  VERSION = "0.5.0.alpha1".freeze
+  VERSION = "0.5.1".freeze
 end
