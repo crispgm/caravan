@@ -31,7 +31,7 @@ option_parser = OptionParser.new do |opts|
   end
 
   options[:once] = false
-  opts.on("-o", "--once", "Deploy at once") do
+  opts.on("-o", "--once", "Deploy for once") do
     options[:once] = true
   end
 

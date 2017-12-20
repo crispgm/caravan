@@ -24,7 +24,7 @@ $ caravan --help
     -d, --dest DEST_PATH             Destination path
     -m, --mode DEPLOY_MODE           Deploy mode
     -i, --ignore IGNORE_FILES        Ignore files
-    -o, --once                       Deploy at once
+    -o, --once                       Deploy for once
     -b, --debug                      Debug mode
         --version                    Show version
 ```
