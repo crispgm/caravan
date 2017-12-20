@@ -15,7 +15,7 @@ module Caravan
         puts "[ERROR] #{msg}".red
       end
 
-      def warning(msg)
+      def warn(msg)
         puts "[WARN] #{msg}".yellow
       end
 

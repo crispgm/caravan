@@ -16,7 +16,7 @@ class MessageTest < CaravanTest
       end
 
       assert_output("[WARN] warn message".yellow << "\n") do
-        Caravan::Message.warning("warn message")
+        Caravan::Message.warn("warn message")
       end
 
       assert_output("succ message".green << "\n") do

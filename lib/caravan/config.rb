@@ -26,8 +26,8 @@ module Caravan
         if File.exist?(user_config_path)
           YAML.load_file(user_config_path)
         else
-          Caravan::Message.warning("User configuration [caravan.yml] not found.")
-          Caravan::Message.warning("Use `caravan init` to generate.")
+          Caravan::Message.warn("User configuration [caravan.yml] not found.")
+          Caravan::Message.warn("Use `caravan init` to generate.")
           default_conf.dup
         end
       end
