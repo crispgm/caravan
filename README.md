@@ -9,6 +9,10 @@ Simple project files watcher and deployer.
 
 The scenario is when we are developing in your local workspace and the program only runs in specific runtime environment, we have to setup by ourself to make the program run and debug on runtime folders, or remote machines. Caravan is the automation tool designed for solving such kind of problems by watching the file changes, and deploy them automatically to its destination.
 
+![](/assets/civ-5-caravan.png)
+
+This is the caravan in Sid Meier's Civilization V, which the project name originally comes from.
+
 ## Installation
 
 ```
