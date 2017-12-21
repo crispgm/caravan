@@ -33,10 +33,24 @@ $ caravan --help
         --version                    Show version
 ```
 
-Example:
+## Examples
+
+Deploy to local directory:
 
 ```
 $ caravan -s /path/to/project/. -d /path/to/deploy -m shell
+```
+
+Deploy to remote machines:
+
+```
+$ caravan -s /path/to/project/. -d user@remote_machines:/path/to/deploy -m rsync
+```
+
+Deploy only once:
+
+```
+$ caravan -s /path/to/project/. -d user@remote_machines:/path/to/deploy -m rsync --once
 ```
 
 ## Configuration
@@ -57,6 +71,12 @@ incremental: true
 exclude:
 - ".git"
 - ".svn"
+```
+
+You may also write `src` and `dst` to `caravan.yml`. Hence, deployment made even easier.
+
+```
+$ caravan
 ```
 
 ## Plan
