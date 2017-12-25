@@ -59,7 +59,7 @@ Generate default configuration:
 
 ```
 $ cd /path/to/src
-$ caravan init
+$ caravan --init
 ```
 
 A `caravan.yml` will be generated as `/path/to/src/caravan.yml`. You may specify any options in command arguments except source path.
