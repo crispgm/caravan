@@ -48,6 +48,7 @@ end
 
 if ARGV.size == 1 && ARGV[0] == "init"
   Caravan.dump_default_conf
+  exit(0)
 end
 
 option_parser.parse!(ARGV)
