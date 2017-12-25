@@ -40,18 +40,20 @@ option_parser = OptionParser.new do |opts|
     options[:debug] = true
   end
 
+  opts.on_head("--init", "Init caravan.yml") do
+    Caravan.dump_default_conf
+    Caravan::Message.success("Generated #{Caravan::Config.default_conf_name}")
+    exit
+  end
+
   opts.on_tail("--version", "Show version") do
     puts Caravan::VERSION
     exit
   end
 end
 
-if ARGV.size == 1 && ARGV[0] == "init"
-  Caravan.dump_default_conf
-  exit(0)
-end
-
 option_parser.parse!(ARGV)
+
 merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]))
 if merged_conf.key?("src") && merged_conf.key?("dst") && merged_conf.key?("deploy_mode")
   Caravan.start(merged_conf)
