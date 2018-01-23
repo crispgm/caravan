@@ -20,9 +20,9 @@ class IntegratedTest < CaravanTest
       assert_true(File.exist?("caravan.yml"))
     end
 
-    should "load default conf if no config file in source path" do
+    should "load nil if no config file in source path" do
       conf = Caravan.process_conf(".")
-      assert_equal(conf, Caravan::Config.default_conf)
+      assert_equal(conf, nil)
     end
 
     should "load user conf if config file in source path" do

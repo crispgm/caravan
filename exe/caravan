@@ -52,9 +52,13 @@ option_parser = OptionParser.new do |opts|
   end
 end
 
-option_parser.parse!(ARGV)
+if ARGV.length == 0
+  merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."))
+else
+  option_parser.parse!(ARGV)
+  merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]))
+end
 
-merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]))
 if merged_conf.key?("src") && merged_conf.key?("dst") && merged_conf.key?("deploy_mode")
   Caravan.start(merged_conf)
 else

@@ -16,7 +16,7 @@ module Caravan
 
     class << self
       def default_conf
-        DEFAULT_CONFIG
+        DEFAULT_CONFIG.dup
       end
 
       def default_conf_name
@@ -29,7 +29,7 @@ module Caravan
         else
           Caravan::Message.warn("User configuration [caravan.yml] not found.")
           Caravan::Message.warn("Use `caravan init` to generate.")
-          default_conf.dup
+          nil
         end
       end
 
@@ -40,7 +40,12 @@ module Caravan
       end
 
       def merge(options, conf)
-        merged_conf = conf
+        if conf.nil?
+          merged_conf = Caravan::Config.default_conf
+        else
+          merged_conf = conf
+        end
+
         merged_conf["src"] = options[:src] if options.key?(:src)
         merged_conf["dst"] = options[:dst] if options.key?(:dst)
         merged_conf["debug"] = options[:debug] if options.key?(:debug)
