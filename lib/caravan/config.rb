@@ -8,7 +8,8 @@ module Caravan
       "incremental" => true,
       "exclude" => %w(
         .git .svn
-      )
+      ),
+      "once" => false
     }.freeze
 
     DEFAULT_CONFIG_NAME = "caravan.yml".freeze
