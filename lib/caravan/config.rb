@@ -28,7 +28,7 @@ module Caravan
           YAML.load_file(user_config_path)
         else
           Caravan::Message.warn("User configuration [caravan.yml] not found.")
-          Caravan::Message.warn("Use `caravan init` to generate.")
+          Caravan::Message.warn("Use `caravan --init` to generate.")
           nil
         end
       end
