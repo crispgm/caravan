@@ -42,7 +42,11 @@ class DeployTest < CaravanTest
         deployer = Caravan::Deploy.create_deployer("#{SOURCE_FOLDER}/*", TARGET_FOLDER, "shell")
         deployer.debug = true
         assert_true(deployer.is_a?(Caravan::DeployMethods::Shell))
+        deployer.after_create()
+        deployer.before_deploy()
         status = deployer.run()
+        deployer.after_deploy()
+        deployer.before_destroy()
         assert_equal(0, status)
         assert_true(File.exist?("#{TARGET_FOLDER}/testfile"))
       end
