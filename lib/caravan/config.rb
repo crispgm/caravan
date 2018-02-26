@@ -4,7 +4,7 @@ module Caravan
   class Config < Hash
     DEFAULT_CONFIG = {
       "debug" => false,
-      "deploy_mode" => "rsync_local",
+      "deploy_mode" => "rsync",
       "incremental" => true,
       "exclude" => %w(
         .git .svn
