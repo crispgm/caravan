@@ -36,7 +36,8 @@ module Caravan
       def dump(user_config_path, user_config)
         File.open(user_config_path, "w") do |f|
           f.write("# Generated Caravan's configuration file.\n")
-          f.write("# Use `caravan --help` to specify the values.\n")
+          f.write("# Use `caravan --help` for instructions on all the configuration values.\n")
+          f.write("# Add `src` and `dst` to specify the source and destination.\n")
           f.write(user_config.to_yaml)
         end
       end
