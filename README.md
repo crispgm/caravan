@@ -11,7 +11,7 @@ The scenario is when we are developing in your local workspace and the program o
 
 ![](/assets/civ-5-caravan.png)
 
-This is the caravan in Sid Meier's Civilization V, which the project name originally comes from.
+This is the caravan in [Sid Meier's Civilization V](http://www.civilization5.com/), which the project name originally comes from.
 
 ## Installation
 
