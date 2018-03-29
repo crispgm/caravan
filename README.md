@@ -79,12 +79,22 @@ You may also write `src` and `dst` to `caravan.yml`. Hence, deployment made even
 $ caravan
 ```
 
+### Deploy Modes
+
+* shell
+    * `cp` in local.
+* scp
+    * `scp` to remote machines, _not recommended_.
+* [rsync](https://rsync.samba.org/)
+    * `rsync` to remote machines, which is the default and recommended mode because it is incremental. Thus, it performs much better.
+* rsync_local
+    * `rsync` in local.
+
 ## Plan
 
 - [x] Basic watching and deploying
 - [x] Exclude watching unwanted files
 - [x] `caravan.yml` for project-specialized configuration
-- [ ] Watch and deploy only the changed file instead of the whole folder
 - [x] Callbacks for deployment
     - [x] `after_create`
     - [x] `after_change`
