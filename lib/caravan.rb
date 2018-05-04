@@ -37,7 +37,7 @@ module Caravan
         exit(0)
       end
       listener.start
-      
+
       trap("INT") do
         listener.stop
         deployer.before_destroy
@@ -67,9 +67,7 @@ module Caravan
 
     def process_conf(src_path, yaml_name = Caravan::Config.default_conf_name)
       Caravan::Message.success("Reading configuration...")
-      if src_path.nil?
-        src_path = '.'
-      end
+      src_path = '.' if src_path.nil?
       user_config_path = File.join(File.expand_path(src_path), yaml_name)
       conf = Caravan::Config.from(user_config_path)
       conf

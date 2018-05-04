@@ -20,7 +20,7 @@ module Caravan
       end
 
       def success(msg)
-        puts "#{msg}".green
+        puts msg.green
       end
     end
   end
