@@ -80,7 +80,7 @@ You may also write `src` and `dst` to `caravan.yml`. Hence, deployment made even
 $ caravan
 ```
 
-`caravan.yml` can be named as you like. To load by your own YAML file, use `--load`:
+`caravan.yml` can be named as you like. To load your own YAML file, use `--load`:
 
 ```
 $ caravan --load my-caravan.yml
