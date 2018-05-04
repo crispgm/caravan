@@ -30,6 +30,7 @@ $ caravan --help
     -i, --ignore IGNORE_FILES        Ignore files
     -o, --once                       Deploy for once
     -b, --debug                      Debug mode
+    -l, --load YAML_FILE             YAML file (Default: ./caravan.yml)
         --version                    Show version
 ```
 
@@ -77,6 +78,12 @@ You may also write `src` and `dst` to `caravan.yml`. Hence, deployment made even
 
 ```
 $ caravan
+```
+
+`caravan.yml` can be named as you like. To load by your own YAML file, use `--load`:
+
+```
+$ caravan --load my-caravan.yml
 ```
 
 ### Deploy Modes
