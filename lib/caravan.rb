@@ -64,12 +64,12 @@ module Caravan
       end
     end
 
-    def process_conf(src_path)
+    def process_conf(src_path, yaml_name = Caravan::Config.default_conf_name)
       Caravan::Message.success("Reading configuration...")
       if src_path.nil?
         src_path = '.'
       end
-      user_config_path = File.join(File.expand_path(src_path), Caravan::Config.default_conf_name)
+      user_config_path = File.join(File.expand_path(src_path), yaml_name)
       conf = Caravan::Config.from(user_config_path)
       conf
     end
