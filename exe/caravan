@@ -10,6 +10,10 @@ option_parser = OptionParser.new do |opts|
   opts.banner = "Caravan #{Caravan::VERSION}\nCopyright (c) David Zhang 2018\n"
   opts.separator ""
 
+  opts.on("-l YAML_NAME", "--load YAML_NAME", "YAML path") do |value|
+    options[:yaml] = value
+  end
+
   opts.on("-s SOURCE_PATH", "--source SOURCE_PATH", "Source path") do |value|
     options[:src] = value
   end
@@ -30,12 +34,10 @@ option_parser = OptionParser.new do |opts|
     end
   end
 
-  options[:once] = false
   opts.on("-o", "--once", "Deploy for once") do
     options[:once] = true
   end
 
-  options[:debug] = false
   opts.on("-b", "--debug", "Debug mode") do
     options[:debug] = true
   end
@@ -56,7 +58,11 @@ if ARGV.length == 0
   merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."))
 else
   option_parser.parse!(ARGV)
-  merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]))
+  if options.key?(:yaml)
+    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src], options[:yaml]))
+  else
+    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]))
+  end
 end
 
 if merged_conf.key?("src") && merged_conf.key?("dst") && merged_conf.key?("deploy_mode")
