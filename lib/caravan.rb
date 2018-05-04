@@ -52,6 +52,7 @@ module Caravan
       deployer.before_deploy
       deployer.run
       deployer.after_deploy
+      Caravan::Message.success("Deployed once.")
     end
 
     def create_listener(deployer, src_path)
