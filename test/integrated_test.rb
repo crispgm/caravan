@@ -25,6 +25,11 @@ class IntegratedTest < CaravanTest
       assert_equal(conf, nil)
     end
 
+    should "load user specific config file" do
+      conf = Caravan.process_conf("./test/fixtures/", "caravan-test.yml")
+      assert_equal("specific_file_name", conf["dst"])
+    end
+
     should "load user conf if config file in source path" do
       user_conf_path = File.expand_path("./test/output/caravan.user.yml")
       user_conf = Caravan::Config.default_conf.dup
