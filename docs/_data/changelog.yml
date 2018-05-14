@@ -1,0 +1,36 @@
+- version: "0.7.0"
+  changes:
+    - text: "Specify caravan.yml's name"
+      hash: 77df905
+- version: "0.6.2"
+  changes:
+    - text: "Set default deploy_mode: rsync"
+      hash: 1ab105b
+- version: "0.6.1"
+  changes:
+    - text: "Bugfix: use the right conf when merging with options"
+      hash: 6408066
+- version: "0.6.0"
+  changes:
+    - text: "Use --init to generate caravan.yml"
+    - text: "Bugfix: exit after init caravan.yml"
+    - text: "Docs on examples and confs"
+- version: "0.5.2"
+  changes:
+    - text: "Add deploy at once"
+    - text: "Parse caravan.yml for src & dst"
+      issue: 4
+- version: "0.5.1"
+  changes:
+    - text: "Implement Hooks"
+- version: "0.4.0"
+  changes:
+    - text: "Add full options in docs"
+      hash: b2d3774
+- version: "0.4.0.beta"
+  changes:
+    - text: "Add caravan init to generate default conf file"
+- version: "0.2.0"
+  changes:
+    - text: "Basically works"
+      hash: 7f0a548

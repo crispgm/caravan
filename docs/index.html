@@ -1,0 +1,50 @@
+---
+layout: index
+title: Home
+---
+
+<div class="section intro" id="introduction">
+  {% if site.project.logo != nil and site.project.logo != "" %}
+  <div class="intro-logo">
+    <img src="{{ site.project.logo }}">
+  </div>
+  {% endif %}
+
+  <div class="intro-text">
+    {{ site.project.subtitle }}
+  </div>
+
+  <div class="intro-desc">
+    {{ site.project.description }}
+  </div>
+
+  <div class="intro-button">
+    <div class="install-item">
+      <a href="{{ site.baseurl }}/docs.html#getting-started">Getting Started</a>
+    </div>
+  </div>
+
+  <div class="intro-version">
+    <span>Version <a href="{{ site.baseurl }}/changelog.html">{{ site.data.changelog[0].version }}</a> ·</span>
+    <span>Created by <a href="{{ site.project.author_link }}">{{ site.project.author }}</a></span>
+  </div>
+
+  <div class="social">
+    <a class="github-button"
+       href="https://github.com/{{ site.project.repo }}"
+       data-icon="octicon-star"
+       data-count-href="/{{ site.project.repo }}/stargazers"
+       data-count-api="/repos/{{ site.project.repo }}#stargazers_count"
+       data-count-aria-label="# stargazers on GitHub"
+       aria-label="Star {{ site.project.repo }} on GitHub">Star
+     </a>
+    <a class="github-button"
+       href="https://github.com/{{ site.project.repo }}/fork"
+       data-icon="octicon-repo-forked"
+       data-count-href="/{{ site.project.repo }}/network"
+       data-count-api="/repos/{{ site.project.repo }}#forks_count"
+       data-count-aria-label="# forks on GitHub"
+       aria-label="Fork {{ site.project.repo }} on GitHub">Fork
+    </a>
+  </div>
+</div>

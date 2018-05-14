@@ -1,0 +1,23 @@
+---
+layout: changelog
+title: Changelog
+---
+
+<div class="article" id="changelog">
+  {% for change in site.data.changelog %}
+    <h3>Version {{ change.version }}</h3>
+    <ul>
+      {% for log in change.changes %}
+        <li>
+          {{ log.text }}
+          {% if log.issue != nil %}
+            <a href="https://github.com/{{ site.project.repo }}/issues/{{ log.issue }}">#{{ log.issue }}</a></li>
+          {% endif %}
+          {% if log.hash != nil %}
+            <a href="https://github.com/{{ site.project.repo }}/commit/{{ log.hash }}">#{{ log.hash }}</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</div>

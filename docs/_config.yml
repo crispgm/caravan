@@ -1,0 +1,34 @@
+baseurl: "/caravan"
+project:
+  name: Caravan
+  subtitle: Simple project files watcher and deployer
+  description: >- # this means to ignore newlines until "baseurl:"
+    The scenario is when we are developing in your local workspace and the program only runs in specific runtime environment, we have to setup by ourself to make the program run and debug on runtime folders, or remote machines. Caravan is the automation tool designed for solving such kind of problems by watching the file changes, and deploy them automatically to its destination.
+  repo: "crispgm/caravan"
+  logo: "/caravan/assets/civ-5-caravan.png"
+  author: "David Zhang"
+  author_link: "https://crispgm.com/"
+  email: crispgm@gmail.com
+  twitter: crispgm
+  medium: "@crispgm"
+highlightjs: true
+
+# Build settings
+markdown: kramdown
+theme: black-white-blue
+plugins:
+  - jekyll-feed
+exclude:
+  - gh-pages
+  - Rakefile
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
