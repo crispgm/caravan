@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentation | Caravan</title>
+  <link rel="stylesheet" href="/caravan/assets/style.css">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <link href="//fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/dracula.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+</head>
+
+  <body>
+    <div class="container">
+      <header class="topbar">
+  <div class="menu">
+    <div class="menu-item">
+      <a href="/caravan/">Home</a>
+    </div>
+    <div class="menu-item">
+      <a href="/caravan/docs.html">Docs</a>
+    </div>
+    <div class="menu-item">
+      <a href="/caravan/changelog.html">Changelog</a>
+    </div>
+    <div class="menu-item">
+      <a href="/caravan/about.html">About</a>
+    </div>
+  </div>
+  <div class="title">
+    <a href="/caravan/">Caravan</a>
+  </div>
+</header>
+
+      <div class="section content">
+  <div class="content-title">
+    Documentation
+  </div>
+</div>
+
+<div class="article">
+<p>Simple project files watcher and deployer.</p>
+
+<p>The scenario is when we are developing in your local workspace and the program only runs in specific runtime environment, we have to setup by ourself to make the program run and debug on runtime folders, or remote machines. Caravan is the automation tool designed for solving such kind of problems by watching the file changes, and deploy them automatically to its destination.</p>
+
+<p><img src="/assets/civ-5-caravan.png" alt="" /></p>
+
+<p>This is the caravan in <a href="http://www.civilization5.com/">Sid Meier’s Civilization V</a>, where the project name originally comes from.</p>
+
+<h2 id="installation">Installation</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gem install caravan
+</code></pre></div></div>
+
+<h2 id="usage">Usage</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ caravan --help
+
+    -s, --source SOURCE_PATH         Source path
+    -d, --dest DEST_PATH             Destination path
+    -m, --mode DEPLOY_MODE           Deploy mode
+    -i, --ignore IGNORE_FILES        Ignore files
+    -o, --once                       Deploy for once
+    -b, --debug                      Debug mode
+    -l, --load YAML_FILE             YAML file (Default: ./caravan.yml)
+        --version                    Show version
+</code></pre></div></div>
+
+<h2 id="examples">Examples</h2>
+
+<p>Deploy to local directory:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ caravan -s /path/to/project/. -d /path/to/deploy -m shell
+</code></pre></div></div>
+
+<p>Deploy to remote machines:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ caravan -s /path/to/project/. -d user@remote_machines:/path/to/deploy -m rsync
+</code></pre></div></div>
+
+<p>Deploy only once:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ caravan -s /path/to/project/. -d user@remote_machines:/path/to/deploy -m rsync --once
+</code></pre></div></div>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Generate default configuration:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /path/to/src
+$ caravan --init
+</code></pre></div></div>
+
+<p>A <code class="highlighter-rouge">caravan.yml</code> will be generated as <code class="highlighter-rouge">/path/to/src/caravan.yml</code>. You may specify any options in command arguments except source path.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>debug: false
+deploy_mode: rsync_local
+incremental: true
+exclude:
+- ".git"
+- ".svn"
+</code></pre></div></div>
+
+<p>You may also write <code class="highlighter-rouge">src</code> and <code class="highlighter-rouge">dst</code> to <code class="highlighter-rouge">caravan.yml</code>. Hence, deployment made even easier.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ caravan
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">caravan.yml</code> can be named as you like. To load your own YAML file, use <code class="highlighter-rouge">--load</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ caravan --load my-caravan.yml
+</code></pre></div></div>
+
+<h3 id="deploy-modes">Deploy Modes</h3>
+
+<ul>
+  <li>shell
+    <ul>
+      <li><code class="highlighter-rouge">cp</code> in local.</li>
+    </ul>
+  </li>
+  <li>scp
+    <ul>
+      <li><code class="highlighter-rouge">scp</code> to remote machines, <em>not recommended</em>.</li>
+    </ul>
+  </li>
+  <li><a href="https://rsync.samba.org/">rsync</a>
+    <ul>
+      <li><code class="highlighter-rouge">rsync</code> to remote machines, which is the default and recommended mode because it is incremental. Thus, it performs much better.</li>
+    </ul>
+  </li>
+  <li>rsync_local
+    <ul>
+      <li><code class="highlighter-rouge">rsync</code> in local.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="plan">Plan</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Basic watching and deploying</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Exclude watching unwanted files</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">caravan.yml</code> for project-specialized configuration</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Callbacks for deployment
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">after_create</code></li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">after_change</code></li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">before_deploy</code></li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">after_deploy</code></li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">before_destroy</code></li>
+    </ul>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Multiple deployment configurations</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p><a href="/LICENSE">MIT</a></p>
+
+</div>
+
+
+
+
+      <footer class="footer">
+  <div class="footer-links">
+    
+    <div class="footer-link-icon">
+      <a href="mailto:crispgm@gmail.com">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </div>
+    
+    
+    <div class="footer-link-icon">
+      <a href="https://github.com/crispgm/caravan">
+        <i class="fa fa-github"></i>
+      </a>
+    </div>
+    
+    
+    <div class="footer-link-icon">
+      <a href="https://twitter.com/crispgm">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </div>
+    
+    
+    <div class="footer-link-icon">
+      <a href="https://medium.com/@crispgm">
+        <i class="fa fa-medium"></i>
+      </a>
+    </div>
+    
+  </div>
+  <div class="footer-copyright">
+    Copyright &copy; 2018, <a href="https://crispgm.com/">David Zhang</a>.
+  </div>
+</footer>
+
+    </div>
+  </body>
+</html>
