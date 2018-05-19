@@ -86,9 +86,9 @@ $ caravan --load my-caravan.yml
 
 ### Deploy Modes
 
-* shell
+* Shell
     * `cp` in local.
-* scp
+* Secure copy (scp)
     * `scp` to remote machines, _not recommended_.
 * [rsync](https://rsync.samba.org/)
     * `rsync` to remote machines, which is the default and recommended mode because it is incremental. Thus, it performs much better.
@@ -106,7 +106,8 @@ $ caravan --load my-caravan.yml
     - [x] `before_deploy`
     - [x] `after_deploy`
     - [x] `before_destroy`
-- [ ] Multiple deployment configurations
+- [ ] ~~Multiple deployment configurations~~
+- [ ] Extension to deploy methods
 
 ## License
 
