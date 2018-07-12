@@ -2,8 +2,8 @@
 
 [![Gem Version](https://badge.fury.io/rb/caravan.svg)](https://badge.fury.io/rb/caravan)
 [![](https://api.travis-ci.org/crispgm/gsm.svg)](https://travis-ci.org/crispgm/caravan)
-[![Code Climate](https://codeclimate.com/github/crispgm/caravan/badges/gpa.svg)](https://codeclimate.com/github/crispgm/caravan)
-[![Test Coverage](https://codeclimate.com/github/crispgm/caravan/badges/coverage.svg)](https://codeclimate.com/github/crispgm/caravan/coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/3d0007620855bd6ffea0/maintainability)](https://codeclimate.com/github/crispgm/caravan/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/3d0007620855bd6ffea0/test_coverage)](https://codeclimate.com/github/crispgm/caravan/test_coverage)
 
 Simple project files watcher and deployer.
 
