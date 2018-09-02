@@ -70,9 +70,6 @@ module Caravan
       src_path = '.' if src_path.nil?
       user_config_path = File.join(File.expand_path(src_path), yaml_name)
       conf = Caravan::Config.from(user_config_path)
-      p src_path
-      p user_config_path
-      p conf
       conf
     end
 
