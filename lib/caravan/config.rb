@@ -49,11 +49,11 @@ module Caravan
         end
       end
 
-      def merge(options, conf, spec)
+      def merge(options, conf, spec = Caravan::Config.default_spec_name)
         if conf.nil?
           merged_conf = Caravan::Config.default_conf[Caravan::Config.default_spec_name]
         else
-          merged_conf = conf[spec]
+          merged_conf = stringify_keys(conf)[spec]
         end
 
         merged_conf["src"] = options[:src] if options.key?(:src)
@@ -70,6 +70,15 @@ module Caravan
         conf.each do |k, v|
           Caravan::Message.info("=> #{k}: #{v}")
         end
+      end
+
+      private
+      def stringify_keys(conf)
+        new_conf = {}
+        conf.each do |sym, v|
+          new_conf[sym.to_s] = v
+        end
+        new_conf
       end
     end
   end
