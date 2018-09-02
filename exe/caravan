@@ -14,6 +14,10 @@ option_parser = OptionParser.new do |opts|
     options[:yaml] = value
   end
 
+  opts.on("-c SPEC_NAME", "--spec SPEC_NAME", "Spec name") do |value|
+    options[:spec] = value
+  end
+
   opts.on("-s SOURCE_PATH", "--source SOURCE_PATH", "Source path") do |value|
     options[:src] = value
   end
@@ -54,14 +58,16 @@ option_parser = OptionParser.new do |opts|
   end
 end
 
+spec_name = options[:spec] || Caravan::Config.default_spec_name
+
 if ARGV.length == 0
-  merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."))
+  merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."), spec_name)
 else
   option_parser.parse!(ARGV)
   if options.key?(:yaml)
-    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src], options[:yaml]))
+    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src], options[:yaml]), spec_name)
   else
-    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]))
+    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]), spec_name)
   end
 end
 

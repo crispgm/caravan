@@ -32,8 +32,8 @@ class IntegratedTest < CaravanTest
 
     should "load user conf if config file in source path" do
       user_conf_path = File.expand_path("./test/output/caravan.user.yml")
-      user_conf = Caravan::Config.default_conf.dup
-      user_conf["deploy_mode"] = "rsync"
+      user_conf = Caravan::Config.default_conf.dup()
+      user_conf["master"]["deploy_mode"] = "rsync"
       Caravan::Config.dump(user_conf_path, user_conf)
       user_conf_loaded = Caravan::Config.from("./test/output/caravan.user.yml")
       assert_equal(user_conf, user_conf_loaded)

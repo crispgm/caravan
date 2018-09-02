@@ -44,7 +44,7 @@ class ConfigTest < CaravanTest
         Caravan::Config.pretty_puts(@default_conf)
       end
 
-      assert_true(std_output.include?("=> exclude:"))
+      assert_true(std_output.include?("[INFO] => master:"))
     end
   end
 

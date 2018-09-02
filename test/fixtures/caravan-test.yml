@@ -1,9 +1,10 @@
 ---
-src: .
-dst: specific_file_name
-debug: true
-deploy_mode: rsync
-incremental: true
-exclude:
-- ".git"
-- ".svn"
+master:
+  src: .
+  dst: specific_file_name
+  debug: true
+  deploy_mode: rsync
+  incremental: true
+  exclude:
+    - ".git"
+    - ".svn"

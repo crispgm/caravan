@@ -3,16 +3,19 @@ require "yaml"
 module Caravan
   class Config < Hash
     DEFAULT_CONFIG = {
-      "debug" => false,
-      "deploy_mode" => "rsync",
-      "incremental" => true,
-      "exclude" => %w(
-        .git .svn
-      ),
-      "once" => false
+      "master" => {
+        "debug" => false,
+        "deploy_mode" => "rsync",
+        "incremental" => true,
+        "exclude" => %w(
+          .git .svn
+        ),
+        "once" => false
+      }
     }.freeze
 
     DEFAULT_CONFIG_NAME = "caravan.yml".freeze
+    DEFAULT_SPEC_NAME = "master".freeze
 
     class << self
       def default_conf
@@ -21,6 +24,10 @@ module Caravan
 
       def default_conf_name
         DEFAULT_CONFIG_NAME
+      end
+
+      def default_spec_name
+        DEFAULT_SPEC_NAME
       end
 
       def from(user_config_path)
@@ -42,11 +49,11 @@ module Caravan
         end
       end
 
-      def merge(options, conf)
+      def merge(options, conf, spec)
         if conf.nil?
-          merged_conf = Caravan::Config.default_conf
+          merged_conf = Caravan::Config.default_conf[Caravan::Config.default_spec_name]
         else
-          merged_conf = conf
+          merged_conf = conf[spec]
         end
 
         merged_conf["src"] = options[:src] if options.key?(:src)
