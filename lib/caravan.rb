@@ -1,5 +1,6 @@
 require "caravan/command"
 require "caravan/config"
+require "caravan/config_migration"
 require "caravan/deploy"
 require "caravan/deploy_methods/shell"
 require "caravan/deploy_methods/scp"
@@ -75,6 +76,11 @@ module Caravan
       src_path = '.' if src_path.nil?
       user_config_path = File.join(File.expand_path(src_path), yaml_name)
       conf = Caravan::Config.from(user_config_path)
+      Caravan::Message.warn(
+        "Caravan now support multiple specs in `caravan.yml`. " \
+        "The default spec is `master`. " \
+        "And we detect that you may need to migrate."
+      ) if Caravan::ConfigMigration.need_migrate?(conf)
       conf
     end
 
