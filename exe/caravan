@@ -60,12 +60,13 @@ option_parser = OptionParser.new do |opts|
 end
 # rubocop:enable Metrics/BlockLength
 
-spec_name = options[:spec] || Caravan::Config.default_spec_name
+default_spec_name = Caravan::Config.default_spec_name
 
 if ARGV.length.zero?
-  merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."), spec_name)
+  merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."), default_spec_name)
 else
   option_parser.parse!(ARGV)
+  spec_name = options[:spec] || default_spec_name
   merged_conf = if options.key?(:yaml)
                   Caravan::Config.merge(
                     options,
