@@ -31,6 +31,7 @@ $ caravan --help
     -o, --once                       Deploy for once
     -b, --debug                      Debug mode
     -l, --load YAML_FILE             YAML file (Default: ./caravan.yml)
+    -c, --spec SPEC_NAME             Spec name (Default: master)
         --version                    Show version
 ```
 
@@ -65,13 +66,14 @@ $ caravan --init
 
 A `caravan.yml` will be generated as `/path/to/src/caravan.yml`. You may specify any options in command arguments except source path.
 
-```
-debug: false
-deploy_mode: rsync_local
-incremental: true
-exclude:
-- ".git"
-- ".svn"
+```yaml
+master:
+  debug: false
+  deploy_mode: rsync_local
+  incremental: true
+  exclude:
+  - ".git"
+  - ".svn"
 ```
 
 You may also write `src` and `dst` to `caravan.yml`. Hence, deployment made even easier.
@@ -84,6 +86,31 @@ $ caravan
 
 ```
 $ caravan --load my-caravan.yml
+```
+
+`caravan.yml` can work with multi specs. The default spec is `master` and you may declare others.
+
+```yaml
+master:
+  src: .
+  dst: /path/to/dst
+  debug: false
+  deploy_mode: rsync_local
+  incremental: true
+  exclude:
+  - ".git"
+  - ".svn"
+debugmode:
+  src: .
+  dst: /path/to/dst
+  debug: true
+  deploy_mode: rsync
+  incremental: true
+```
+
+```
+$ caravan -c master
+$ caravan -c debugmode
 ```
 
 ### Deploy Modes
@@ -108,7 +135,7 @@ $ caravan --load my-caravan.yml
     - [x] `before_deploy`
     - [x] `after_deploy`
     - [x] `before_destroy`
-- [ ] ~~Multiple deployment configurations~~
+- [x] Multiple deployment configurations
 - [ ] Extension to deploy methods
 
 ## License

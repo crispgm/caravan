@@ -6,12 +6,17 @@ require "optparse"
 require "caravan"
 
 options = {}
+# rubocop:disable Metrics/BlockLength
 option_parser = OptionParser.new do |opts|
   opts.banner = "Caravan #{Caravan::VERSION}\nCopyright (c) David Zhang 2018\n"
   opts.separator ""
 
   opts.on("-l YAML_NAME", "--load YAML_NAME", "YAML path") do |value|
     options[:yaml] = value
+  end
+
+  opts.on("-c SPEC_NAME", "--spec SPEC_NAME", "Spec name") do |value|
+    options[:spec] = value
   end
 
   opts.on("-s SOURCE_PATH", "--source SOURCE_PATH", "Source path") do |value|
@@ -53,19 +58,33 @@ option_parser = OptionParser.new do |opts|
     exit
   end
 end
+# rubocop:enable Metrics/BlockLength
 
-if ARGV.length == 0
-  merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."))
+default_spec_name = Caravan::Config.default_spec_name
+
+if ARGV.length.zero?
+  merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."), default_spec_name)
 else
   option_parser.parse!(ARGV)
-  if options.key?(:yaml)
-    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src], options[:yaml]))
-  else
-    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]))
-  end
+  spec_name = options[:spec] || default_spec_name
+  merged_conf = if options.key?(:yaml)
+                  Caravan::Config.merge(
+                    options,
+                    Caravan.process_conf(options[:src], options[:yaml]),
+                    spec_name
+                  )
+                else
+                  Caravan::Config.merge(
+                    options,
+                    Caravan.process_conf(options[:src]),
+                    spec_name
+                  )
+                end
 end
 
-if merged_conf.key?("src") && merged_conf.key?("dst") && merged_conf.key?("deploy_mode")
+if merged_conf.key?("src") &&
+   merged_conf.key?("dst") &&
+   merged_conf.key?("deploy_mode")
   Caravan.start(merged_conf)
 else
   Caravan::Message.error("No src, dst, deploy_mode specified. Cannot deploy.")

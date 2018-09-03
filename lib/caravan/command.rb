@@ -4,7 +4,7 @@ module Caravan
       def run(cmd, debug = false)
         output = `#{cmd}`
         Caravan::Message.debug(cmd) if debug
-        return $?.exitstatus, output
+        return $CHILD_STATUS.exitstatus, output
       end
     end
   end

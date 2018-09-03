@@ -44,22 +44,26 @@ class ConfigTest < CaravanTest
         Caravan::Config.pretty_puts(@default_conf)
       end
 
-      assert_true(std_output.include?("=> exclude:"))
+      assert_true(std_output.include?("[INFO] => master:"))
     end
   end
 
   context "merge options with conf" do
     should "assign conf if no options" do
       conf = {
-        "c": 1
+        "master": {
+          "c": 1
+        }
       }
       merged = Caravan::Config.merge({}, conf)
-      assert_equal(conf, merged)
+      assert_equal({"c": 1}, merged)
     end
 
     should "merge if options exist" do
       conf = {
-        "c": 1
+        "master": {
+          "c": 1
+        }
       }
       merged = Caravan::Config.merge({:debug => true}, conf)
       assert_true(merged["debug"])
@@ -67,7 +71,9 @@ class ConfigTest < CaravanTest
 
     should "override src" do
       conf = {
-        "src": 1
+        "master": {
+          "src": 1
+        }
       }
       merged = Caravan::Config.merge({:src => 2}, conf)
       assert_equal(2, merged["src"])

@@ -1,5 +1,6 @@
 require "caravan/command"
 require "caravan/config"
+require "caravan/config_migration"
 require "caravan/deploy"
 require "caravan/deploy_methods/shell"
 require "caravan/deploy_methods/scp"
@@ -21,7 +22,11 @@ module Caravan
 
       Caravan::Config.pretty_puts(merged_conf)
 
-      deployer = Caravan::Deploy.create_deployer(src_path, target_path, deploy_mode)
+      deployer = Caravan::Deploy.create_deployer(
+        src_path,
+        target_path,
+        deploy_mode
+      )
       deployer.debug = true if debug
       exit(-1) if deployer.nil?
 
@@ -62,6 +67,7 @@ module Caravan
         return unless deployer.before_deploy
         deployer.run
         deployer.after_deploy
+        # rubocop:enable Lint/NonLocalExitFromIterator
       end
     end
 
@@ -70,6 +76,11 @@ module Caravan
       src_path = '.' if src_path.nil?
       user_config_path = File.join(File.expand_path(src_path), yaml_name)
       conf = Caravan::Config.from(user_config_path)
+      Caravan::Message.warn(
+        "Caravan now support multiple specs in `caravan.yml`. " \
+        "The default spec is `master`. " \
+        "And we detect that you may need to migrate."
+      ) if Caravan::ConfigMigration.need_migrate?(conf)
       conf
     end
 
@@ -78,7 +89,10 @@ module Caravan
     end
 
     def dump_default_conf
-      user_config_path = File.join(File.expand_path("."), Caravan::Config.default_conf_name)
+      user_config_path = File.join(
+        File.expand_path("."),
+        Caravan::Config.default_conf_name
+      )
       default_conf = Caravan::Config.default_conf
 
       Caravan::Config.dump(user_config_path, default_conf)
