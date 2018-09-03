@@ -6,6 +6,7 @@ require "optparse"
 require "caravan"
 
 options = {}
+# rubocop:disable Metrics/BlockLength
 option_parser = OptionParser.new do |opts|
   opts.banner = "Caravan #{Caravan::VERSION}\nCopyright (c) David Zhang 2018\n"
   opts.separator ""
@@ -57,21 +58,32 @@ option_parser = OptionParser.new do |opts|
     exit
   end
 end
+# rubocop:enable Metrics/BlockLength
 
 spec_name = options[:spec] || Caravan::Config.default_spec_name
 
-if ARGV.length == 0
+if ARGV.length.zero?
   merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."), spec_name)
 else
   option_parser.parse!(ARGV)
   if options.key?(:yaml)
-    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src], options[:yaml]), spec_name)
+    merged_conf = Caravan::Config.merge(
+      options,
+      Caravan.process_conf(options[:src], options[:yaml]),
+      spec_name
+    )
   else
-    merged_conf = Caravan::Config.merge(options, Caravan.process_conf(options[:src]), spec_name)
+    merged_conf = Caravan::Config.merge(
+      options,
+      Caravan.process_conf(options[:src]),
+      spec_name
+    )
   end
 end
 
-if merged_conf.key?("src") && merged_conf.key?("dst") && merged_conf.key?("deploy_mode")
+if merged_conf.key?("src") &&
+   merged_conf.key?("dst") &&
+   merged_conf.key?("deploy_mode")
   Caravan.start(merged_conf)
 else
   Caravan::Message.error("No src, dst, deploy_mode specified. Cannot deploy.")

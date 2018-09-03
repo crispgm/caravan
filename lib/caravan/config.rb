@@ -51,7 +51,9 @@ module Caravan
 
       def merge(options, conf, spec = Caravan::Config.default_spec_name)
         if conf.nil?
-          merged_conf = Caravan::Config.default_conf[Caravan::Config.default_spec_name]
+          default_spec_name = Caravan::Config.default_spec_name
+          merged_conf = Caravan::Config.default_conf[default_spec_name]
+          Caravan::Message.warn("Fail to load conf. Use default instead.")
         else
           merged_conf = stringify_keys(conf)[spec]
         end
@@ -73,6 +75,7 @@ module Caravan
       end
 
       private
+
       def stringify_keys(conf)
         new_conf = {}
         conf.each do |sym, v|

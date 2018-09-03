@@ -62,6 +62,7 @@ module Caravan
         return unless deployer.before_deploy
         deployer.run
         deployer.after_deploy
+        # rubocop:enable Lint/NonLocalExitFromIterator
       end
     end
 
@@ -78,7 +79,10 @@ module Caravan
     end
 
     def dump_default_conf
-      user_config_path = File.join(File.expand_path("."), Caravan::Config.default_conf_name)
+      user_config_path = File.join(
+        File.expand_path("."),
+        Caravan::Config.default_conf_name
+      )
       default_conf = Caravan::Config.default_conf
 
       Caravan::Config.dump(user_config_path, default_conf)
