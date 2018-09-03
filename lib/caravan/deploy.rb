@@ -120,7 +120,9 @@ module Caravan
       def relative_path(path)
         working_dir = Dir.pwd
         path_routes = path.split(working_dir)
-        return nil if path_routes.nil? || path_routes.empty? || path_routes.size < 2
+        return nil if path_routes.nil? ||
+                      path_routes.empty? ||
+                      path_routes.size < 2
 
         path_routes[-1]
       end

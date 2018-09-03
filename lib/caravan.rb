@@ -21,7 +21,11 @@ module Caravan
 
       Caravan::Config.pretty_puts(merged_conf)
 
-      deployer = Caravan::Deploy.create_deployer(src_path, target_path, deploy_mode)
+      deployer = Caravan::Deploy.create_deployer(
+        src_path,
+        target_path,
+        deploy_mode
+      )
       deployer.debug = true if debug
       exit(-1) if deployer.nil?
 

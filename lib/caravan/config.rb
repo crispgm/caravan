@@ -41,22 +41,24 @@ module Caravan
       end
 
       def dump(user_config_path, user_config)
+        # rubocop:disable Metrics/LineLength
         File.open(user_config_path, "w") do |f|
           f.write("# Generated Caravan's configuration file.\n")
           f.write("# Use `caravan --help` for instructions on all the configuration values.\n")
           f.write("# Add `src` and `dst` to specify the source and destination.\n")
           f.write(user_config.to_yaml)
         end
+        # rubocop:enable Metrics/LineLength
       end
 
       def merge(options, conf, spec = Caravan::Config.default_spec_name)
-        if conf.nil?
-          default_spec_name = Caravan::Config.default_spec_name
-          merged_conf = Caravan::Config.default_conf[default_spec_name]
-          Caravan::Message.warn("Fail to load conf. Use default instead.")
-        else
-          merged_conf = stringify_keys(conf)[spec]
-        end
+        merged_conf = if conf.nil?
+                        Caravan::Message.warn("Fail to load conf. Use default instead.")
+                        default_spec_name = Caravan::Config.default_spec_name
+                        Caravan::Config.default_conf[default_spec_name]
+                      else
+                        stringify_keys(conf)[spec]
+                      end
 
         merged_conf["src"] = options[:src] if options.key?(:src)
         merged_conf["dst"] = options[:dst] if options.key?(:dst)

@@ -66,19 +66,19 @@ if ARGV.length.zero?
   merged_conf = Caravan::Config.merge({}, Caravan.process_conf("."), spec_name)
 else
   option_parser.parse!(ARGV)
-  if options.key?(:yaml)
-    merged_conf = Caravan::Config.merge(
-      options,
-      Caravan.process_conf(options[:src], options[:yaml]),
-      spec_name
-    )
-  else
-    merged_conf = Caravan::Config.merge(
-      options,
-      Caravan.process_conf(options[:src]),
-      spec_name
-    )
-  end
+  merged_conf = if options.key?(:yaml)
+                  Caravan::Config.merge(
+                    options,
+                    Caravan.process_conf(options[:src], options[:yaml]),
+                    spec_name
+                  )
+                else
+                  Caravan::Config.merge(
+                    options,
+                    Caravan.process_conf(options[:src]),
+                    spec_name
+                  )
+                end
 end
 
 if merged_conf.key?("src") &&
