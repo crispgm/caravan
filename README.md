@@ -5,6 +5,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/3d0007620855bd6ffea0/maintainability)](https://codeclimate.com/github/crispgm/caravan/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/3d0007620855bd6ffea0/test_coverage)](https://codeclimate.com/github/crispgm/caravan/test_coverage)
 
+NOTE: Active developement on Caravan has stopped. Please see [go-van](https://github.com/crispgm/go-van).
+
 Simple project files watcher and deployer.
 
 The scenario is when we are developing in your local workspace and the program only runs in specific runtime environment, we have to setup by ourself to make the program run and debug on runtime folders, or remote machines. Caravan is the automation tool designed for solving such kind of problems by watching the file changes, and deploy them automatically to its destination.
