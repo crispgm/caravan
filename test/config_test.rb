@@ -33,7 +33,7 @@ class ConfigTest < CaravanTest
     should "get default if user configuration is not found" do
       std_output = capture_stdout do
         output = Caravan::Config.from("caravan.inexisted.yml")
-        assert_equal(output, nil)
+        assert_nil(output)
       end
 
       assert_true(std_output.include?("[caravan.yml] not found"))

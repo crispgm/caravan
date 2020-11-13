@@ -22,7 +22,7 @@ class IntegratedTest < CaravanTest
 
     should "load nil if no config file in source path" do
       conf = Caravan.process_conf(".")
-      assert_equal(conf, nil)
+      assert_nil(conf)
     end
 
     should "load user specific config file" do
