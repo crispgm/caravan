@@ -1,7 +1,7 @@
 # [Caravan](https://crispgm.github.io/caravan/)
 
 [![Gem Version](https://badge.fury.io/rb/caravan.svg)](https://badge.fury.io/rb/caravan)
-[![](https://api.travis-ci.org/crispgm/caravan.svg)](https://travis-ci.org/crispgm/caravan)
+![GitHub CI](https://github.com/crispgm/caravan/workflows/build/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3d0007620855bd6ffea0/maintainability)](https://codeclimate.com/github/crispgm/caravan/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/3d0007620855bd6ffea0/test_coverage)](https://codeclimate.com/github/crispgm/caravan/test_coverage)
 
